@@ -1,3 +1,6 @@
+import React, { useState } from 'react'
+import { AgregarTarea } from './Components/AgregarTarea'
+
 const Items = ({ nombre, visto }) => {
     return (
         <li>{nombre}
@@ -5,21 +8,36 @@ const Items = ({ nombre, visto }) => {
     );
 }
 
+
 export const ListadoApp = () => {
+
+    const addTask = () => {
+        setArreglo([...arreglo, { nombre: 'nuevo', visto: false }])
+    }
+
+    let ListadoSecciones = [
+        { nombre: "Instalaciones", visto: true },
+        { nombre: "Uso de vite", visto: true },
+        { nombre: "Componentes", visto: true },
+        { nombre: "Variables en JSX", visto: true },
+        { nombre: "Props", visto: true },
+        { nombre: "Eventos", visto: true },
+        { nombre: "useState", visto: true },
+        { nombre: "Redux", visto: false },
+        { nombre: "CustomHooks", visto: false },
+    ]
+
+    const [arreglo, setArreglo] = useState(ListadoSecciones);
+
     return (
         <>
             <h1>Listado de temas del curso</h1>
+            <AgregarTarea></AgregarTarea>
             <ol>
-                <Items nombre="Instalaciones" visto={true}></Items>
-                <Items nombre="Uso de vite" visto={true}></Items>
-                <Items nombre="Componentes" visto={true}></Items>
-                <Items nombre="Variables en JSX" visto={true}></Items>
-                <Items nombre="Props" visto={true}></Items>
-                <Items nombre="Eventos" visto={true}></Items>
-                <Items nombre="useState" visto={true}></Items>
-                <Items nombre="Redux" visto={false}></Items>
-                <Items nombre="CustomHooks" visto={false}></Items>
+                {arreglo.map(item => <Items key={item.nombre} nombre={item.nombre} visto={item.visto}></Items>)}
             </ol>
+
+            <button onClick={() => addTask()}>Agregar tarea</button>
         </>
     )
 }
